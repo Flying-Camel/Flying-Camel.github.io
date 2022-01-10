@@ -1,37 +1,78 @@
-## Welcome to GitHub Pages
+# eleventy-base-blog
 
-You can use the [editor on GitHub](https://github.com/Flying-Camel/Flying-Camel.github.io/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
+A starter repository showing how to build a blog with the [Eleventy](https://github.com/11ty/eleventy) static site generator.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+[![Build Status](https://travis-ci.org/11ty/eleventy-base-blog.svg?branch=master)](https://travis-ci.org/11ty/eleventy-base-blog)
 
-### Markdown
+## Demos
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+* [Netlify](https://eleventy-base-blog.netlify.com/)
+* [GitHub Pages](https://11ty.github.io/eleventy-base-blog/)
+* [Remix on Glitch](https://glitch.com/~11ty-eleventy-base-blog)
 
-```markdown
-Syntax highlighted code block
+## Deploy this to your own site
 
-# Header 1
-## Header 2
-### Header 3
+These builders are amazing—try them out to get your own Eleventy site in a few clicks!
 
-- Bulleted
-- List
+* [Get your own Eleventy web site on Netlify](https://app.netlify.com/start/deploy?repository=https://github.com/11ty/eleventy-base-blog)
+* [Get your own Eleventy web site on Vercel](https://vercel.com/import/project?template=11ty%2Feleventy-base-blog)
 
-1. Numbered
-2. List
+## Getting Started
 
-**Bold** and _Italic_ and `Code` text
+### 1. Clone this Repository
 
-[Link](url) and ![Image](src)
+```
+git clone https://github.com/11ty/eleventy-base-blog.git my-blog-name
 ```
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
 
-### Jekyll Themes
+### 2. Navigate to the directory
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Flying-Camel/Flying-Camel.github.io/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+```
+cd my-blog-name
+```
 
-### Support or Contact
+Specifically have a look at `.eleventy.js` to see if you want to configure any Eleventy options differently.
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+### 3. Install dependencies
+
+```
+npm install
+```
+
+### 4. Edit _data/metadata.json
+
+### 5. Run Eleventy
+
+```
+npx eleventy
+```
+
+Or build and host locally for local development
+```
+npx eleventy --serve
+```
+
+Or build automatically when a template changes:
+```
+npx eleventy --watch
+```
+
+Or in debug mode:
+```
+DEBUG=* npx eleventy
+```
+
+### Implementation Notes
+
+* `about/index.md` shows how to add a content page.
+* `posts/` has the blog posts but really they can live in any directory. They need only the `post` tag to be added to this collection.
+* Add the `nav` tag to add a template to the top level site navigation. For example, this is in use on `index.njk` and `about/index.md`.
+* Content can be any template format (blog posts needn’t be markdown, for example). Configure your supported templates in `.eleventy.js` -> `templateFormats`.
+	* Because `css` and `png` are listed in `templateFormats` but are not supported template types, any files with these extensions will be copied without modification to the output (while keeping the same directory structure).
+* The blog post feed template is in `feed/feed.njk`. This is also a good example of using a global data files in that it uses `_data/metadata.json`.
+* This example uses three layouts:
+  * `_includes/layouts/base.njk`: the top level HTML structure
+  * `_includes/layouts/home.njk`: the home page template (wrapped into `base.njk`)
+  * `_includes/layouts/post.njk`: the blog post template (wrapped into `base.njk`)
+* `_includes/postlist.njk` is a Nunjucks include and is a reusable component used to display a list of all the posts. `index.njk` has an example of how to use it.
